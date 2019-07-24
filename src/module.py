@@ -103,7 +103,7 @@ def bank_formatted(iban, chunks):
         pass
 
     ibanf.pop(0)
-    print('Bank code: ', ibanf)
+    return ' '.join(ibanf)#TRACE----
 
 
 # Let's call the validator
@@ -151,6 +151,6 @@ def iban_validator():
         if ibann % 97 == 1:
             print("Seems legit!")
             print('Iban number: ', iban_formatted(iban).upper())
-            bank_formatted(iban, chunks)
+            print('Bank code: ', bank_formatted(iban, chunks))#TRACE----
         else:
             print("I don't think it's a valid IBAN, sorry")
