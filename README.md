@@ -6,25 +6,27 @@ IBAN checker is a python software designed to validate an International Bank  Ac
 First you must access from your terminal to the directory where you want to save the project. Install this project on your local computer by typing the following in the command prompt of the linux command interpreter:
 
 git clone https://github.com/josepmartorell/IBAN_Checker.git
+
+# Table of Contents
+- Usage
+- Contribute
+- Credits
+- License
  
 # Usage
 
-To run the script you should first access the src folder from the terminal within the project folder, similar to the following:
+To run the script you should first access the src folder and type this line in the interpreter's order indicator to run the script:
  
-user@hostname:~/PycharmProjects/IBAN_Checker/src$ 
-
-Then type an run this line at the command prompt:
-
-python3 main.py
+user@hostname:~/PycharmProjects/IBAN_Checker/src$ python3 main.py
 
 The terminal will ask you for the iban account number, therefor in the main file you find three accouns for testing the script. If the validation it's OK, the script displays:
 
--1/. "Iban number" (matching of four numbers starting on the left). 
--2/. the "Bank code", the actual country code format for the iban account.
+1. "Iban number" (matching of four numbers starting on the left). 
+2. "Bank code" (the actual country code format for the iban account).
 
 # Contribute
 
-Theres two bugs located at the lines 56 and 93. I will greatly thanked for any suggestion or fixes about them.
+There are two bugs located at the lines 56 and 93. I will greatly thanked for any suggestion or fixes about them.
 
 # Credits
 
