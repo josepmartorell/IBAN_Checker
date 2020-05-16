@@ -1,6 +1,3 @@
-#!/usr/bin/python3.7
-# -*- coding: utf-8 -*-
-
 import json
 
 # let's read and load json file
@@ -150,7 +147,7 @@ def iban_validator():
         ibann = int(iban2)
         if ibann % 97 == 1:
             print("Seems legit!")
-            print('Iban number: ', iban_formatted(iban).upper())
-            print('Bank code: ', bank_formatted(iban, chunks))#TRACE----
+            print('IBAN NUMBER.... ', iban_formatted(iban).upper())
+            print('BANK CODE...... ', bank_formatted(iban, chunks))#TRACE----
         else:
             print("I don't think it's a valid IBAN, sorry")
