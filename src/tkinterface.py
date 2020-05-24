@@ -1,6 +1,6 @@
 import tkinter as tkk
 import json
-import cli
+from src import cli
 
 with open('iban.json', 'r') as json_file:
     data = json.load(json_file)
@@ -19,6 +19,7 @@ class Application(tkk.Frame):
         self.create_widgets()
         self.length = 0
         self.country = ""
+        self.ibanf = 0
         master.title("IBAN_Checker")
         master.configure(background="white")
         master.geometry("600x64")
@@ -44,6 +45,7 @@ class Application(tkk.Frame):
         code2 = (iban[0:2].upper())
         length2 = self.registry_length(code2)
         name_country = self.registry_country(code2)
+        chunks = self.registry_format(code2)
 
         if not code2.isalpha():
             print("Invalid country code")
@@ -69,10 +71,12 @@ class Application(tkk.Frame):
             ibann = int(iban2)
             if ibann % 97 == 1:
                 print("Seems legit!")
-                print('\nIban number: ', self.iban_formatted(iban).upper())
+                print('\nIBAN NUMBER: ', self.iban_formatted(iban).upper())
+                print('BANK CODE...... ', self.bank_formatted(iban, chunks))
             else:
                 print("Fake account!")
-                print('\nIban number: ', self.iban_formatted(iban).upper())
+                print('\nIBAN NUMBER: ', self.iban_formatted(iban).upper())
+                print('BANK CODE...... ', self.bank_formatted(iban, chunks))
 
     def registry_length(self, code):
         for p in data['values']:
@@ -86,13 +90,84 @@ class Application(tkk.Frame):
                 self.country = p['country']
         return self.country
 
+    def registry_format(self, code):
+        for p in data['values']:
+            if p['code'] == code:
+                format = p['format']
+                return format
+
     def iban_formatted(self, iban):
         return ' '.join(iban[i:i + 4] for i in range(0, len(iban), 4))
+
+    def bank_formatted(self, iban, chunks):
+        # list '!' positions
+        # chunks = registry_format(code.upper())
+        list = []
+        counter = 0
+        for i in chunks:
+            if (i.find('!')) == 0:
+                list.append(counter)
+            counter += 1
+
+        # list quantity of digits per cell
+        list2 = []
+        i = -1
+        for j in list:
+            if (list[i + 1]) - (list[i]) == 3:
+                list2.append(1)
+            else:
+                list2.append(2)
+            i += 1
+
+        i = 1
+
+        list3 = ['0']
+        n = 1
+        for k in chunks:
+            if i in list:
+                if i == 3:
+                    list3.append('4')
+                elif list2[n] != 1:
+                    list3.append('1' + k)
+                    n += 1
+                else:
+                    list3.append(k)
+                    n += 1
+            i += 1
+
+        # cast into int type
+        list4 = [int(x) for x in list3]
+
+        list5 = []
+        c = 0
+        for i in list4:
+            c += i
+            list5.append(c)
+
+        try:
+            global ibanf
+            ibanf = []
+            r = -1
+            c = 0
+            for i in iban:
+                x = list5[r - 1]
+                y = list5[r]
+                if c != 0:
+                    ibanf.append(iban[x:y])
+                r += 1
+                c += 1
+
+
+        except:
+            pass
+
+        ibanf.pop(0)
+        return ' '.join(ibanf)  # TRACE----
 
 
 if __name__ == '__main__':
 
-    mode = input('\nSelect spider run mode:'
+    mode = input('\nSelect run mode:'
                  '\n\tCLI .........(type "c" + enter)'
                  "\n\tINTERFACE ....(press enter)\n")
 
