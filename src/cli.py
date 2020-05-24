@@ -9,6 +9,7 @@ length = 0
 country = 0
 ibanf = 0
 
+
 # let's get the length from the json file
 def registry_length(code):
     global length
@@ -16,6 +17,7 @@ def registry_length(code):
         if p['code'] == code:
             length = p['length']
     return length
+
 
 # let's get the country name from the json file
 def registry_country(code):
@@ -25,6 +27,7 @@ def registry_country(code):
             country = p['country']
     return country
 
+
 # let's get the bank code from the json file
 def registry_format(code):
     for p in data['values']:
@@ -32,14 +35,16 @@ def registry_format(code):
             format = p['format']
             return format
 
+
 # Let's get the IBAN formatted in blocks of 4 digits
 def iban_formatted(iban):
     return ' '.join(iban[i:i + 4] for i in range(0, len(iban), 4))
 
+
 # Let's get the BANK code format
 def bank_formatted(iban, chunks):
     # list '!' positions
-    #chunks = registry_format(code.upper())
+    # chunks = registry_format(code.upper())
     list = []
     counter = 0
     for i in chunks:
@@ -100,12 +105,11 @@ def bank_formatted(iban, chunks):
         pass
 
     ibanf.pop(0)
-    return ' '.join(ibanf)#TRACE----
+    return ' '.join(ibanf)  # TRACE----
 
 
 # Let's call the validator
 def iban_validator():
-
     # let's enter the IBAN
     iban = input("Enter IBAN, please: ")
 
@@ -148,6 +152,6 @@ def iban_validator():
         if ibann % 97 == 1:
             print("Seems legit!")
             print('IBAN NUMBER.... ', iban_formatted(iban).upper())
-            print('BANK CODE...... ', bank_formatted(iban, chunks))#TRACE----
+            print('BANK CODE...... ', bank_formatted(iban, chunks))  # TRACE----
         else:
             print("I don't think it's a valid IBAN, sorry")
